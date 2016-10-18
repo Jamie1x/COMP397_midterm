@@ -9,7 +9,7 @@ var objects;
         __extends(GameObject, _super);
         function GameObject(atlas, imageString, deathAnimString) {
             _super.call(this, atlas, imageString);
-            this._deathAnim = deathAnimString;
+            //this._deathAnim = deathAnimString;
             this._initialize(imageString);
             this.start();
         }
@@ -66,13 +66,10 @@ var objects;
         GameObject.prototype.update = function () {
             this.x = this.position.x;
             this.y = this.position.y;
-            if (this.currentAnimationFrame == enemyAtlas.getNumFrames("explode") - 1) {
-                currentScene.removeChild(this);
-            }
         };
         GameObject.prototype.destroy = function () {
-            this.gotoAndPlay(this._deathAnim);
-            currentScene.removeChild(this);
+            //this.gotoAndPlay(this._deathAnim);
+            //currentScene.removeChild(this);
         };
         return GameObject;
     })(createjs.Sprite);

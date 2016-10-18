@@ -7,9 +7,11 @@ var objects;
 (function (objects) {
     var Enemy = (function (_super) {
         __extends(Enemy, _super);
-        function Enemy(imageString, life) {
+        function Enemy(imageString, life, deathAnimString) {
             _super.call(this, enemyAtlas, imageString, "");
+            this._deathAnimation = deathAnimString;
             this._life = life;
+            this._isDead = false;
         }
         Object.defineProperty(Enemy.prototype, "life", {
             get: function () {
@@ -19,7 +21,12 @@ var objects;
             configurable: true
         });
         Enemy.prototype.update = function () {
-            if (this.life <= 0) {
+            //if out of lives and not already dead, die
+            if (this._life <= 0 && this._isDead == false) {
+                this._isDead = true;
+                this.gotoAndPlay(this._deathAnimation);
+            }
+            if (this.currentAnimationFrame == enemyAtlas.getNumFrames(this._deathAnimation) - 1) {
                 this._dead();
             }
         };
@@ -34,7 +41,10 @@ var objects;
             this._life--;
         };
         Enemy.prototype._dead = function () {
-            this.destroy();
+            //when an enemy is killed add score, remove enemy, and request new enemy
+            score += 5;
+            currentScene.removeChild(this);
+            newEnemy = true;
         };
         return Enemy;
     })(objects.GameObject);

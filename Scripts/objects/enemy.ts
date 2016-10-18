@@ -4,7 +4,9 @@ module objects {
         private _move : objects.Vector2;
         private _speed : number;
 
+        private _deathAnimation : string;
         private _life : number;
+        private _isDead : boolean;
 
         // public variables
         public name:string;
@@ -12,9 +14,11 @@ module objects {
         public height:number;
         public center:objects.Vector2;
 
-        constructor(imageString:string, life : number) {
+        constructor(imageString:string, life : number, deathAnimString) {
             super(enemyAtlas, imageString, "");
+            this._deathAnimation = deathAnimString;
             this._life = life;
+            this._isDead = false;
         }
 
         get life() : number {
@@ -22,7 +26,13 @@ module objects {
         }
 
         public update() : void {
-            if(this.life <= 0){
+            //if out of lives and not already dead, die
+            if(this._life <= 0 && this._isDead == false){
+                this._isDead = true;
+                this.gotoAndPlay(this._deathAnimation);
+            }
+
+            if(this.currentAnimationFrame == enemyAtlas.getNumFrames(this._deathAnimation) - 1) {
                 this._dead();
             }
         }
@@ -41,7 +51,10 @@ module objects {
         }
 
         private _dead() : void {
-            this.destroy();
+            //when an enemy is killed add score, remove enemy, and request new enemy
+            score += 5;
+            currentScene.removeChild(this);
+            newEnemy = true;
         }
     }
 }

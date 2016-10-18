@@ -12,22 +12,33 @@ var scenes;
             this.start();
         }
         Play.prototype.start = function () {
-            this._tempPos = new objects.Vector2(config.Screen.WIDTH / 2, config.Screen.HEIGHT / 2);
-            this._enemy = new objects.Enemy("Enemy", 5);
-            this._enemy.setPosition(this._tempPos);
-            this.addChild(this._enemy);
-            this._enemy.on("click", this._onEnemyClick, this);
+            //add background
+            this._gameBg = new createjs.Bitmap(assets.getResult("GameBg"));
+            this.addChild(this._gameBg);
+            //add score label
+            score = 0;
+            this._scoreLbl = new createjs.Text("Score: " + score, "30px Serif", "#ffffff");
+            this._scoreLbl.x = 10;
+            this.addChild(this._scoreLbl);
+            newEnemy = true;
             stage.addChild(this);
         };
         Play.prototype.update = function () {
-            console.log(this._enemy.life);
-            this._enemy.update();
-            if (this._enemy.life <= 0) {
-                stage.removeChild(this._enemy);
+            this._scoreLbl.text = "Score: " + score;
+            //spawn new enemy when new enemy is true(old enemy died)
+            if (newEnemy == true) {
+                newEnemy = false;
+                this._enemy = new objects.Enemy("robber", Math.floor(Math.random() * 4 + 1), "explode");
+                this._tempPos = new objects.Vector2(Math.random() * 700 + 100, Math.random() * 500 + 100);
+                this._enemy.setPosition(this._tempPos);
+                this._enemy.addEventListener("click", this._onEnemyClick);
+                enemy = this._enemy;
+                this.addChild(this._enemy);
             }
+            this._enemy.update();
         };
         Play.prototype._onEnemyClick = function (event) {
-            this._enemy.shot();
+            enemy.shot();
         };
         return Play;
     })(objects.Scene);

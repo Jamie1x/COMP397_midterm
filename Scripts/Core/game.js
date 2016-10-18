@@ -1,16 +1,23 @@
 /// <reference path = "_reference.ts" />
+//COMP397 MidTerm
+//Jamie Kennedy - 300753196
+//October 18, 2016
 // Global Variables
 var assets;
 var canvas;
 var stage;
+var score;
+var spriteSheetLoader;
 var enemyAtlas;
+var newEnemy;
+var enemy;
 var currentScene;
 var scene;
 // Preload Assets required
 var assetData = [
     { id: "PlayBtn", src: "../../Assets/images/sack.png" },
     { id: "MenuBg", src: "../../Assets/images/bank1.png" },
-    { id: "Target", src: "../../Assets/images/crosshair.png" },
+    { id: "GameBg", src: "../../Assets/images/bank.png" },
     { id: "Enemy", src: "../../Assets/images/enemy.png" }
 ];
 function preload() {
@@ -45,11 +52,7 @@ function init() {
                 "frames": [4, 1, 5, 2, 3], "speed": 0.1, next: false
             },
             "robber": { "frames": [0] }
-        },
-        "texturepacker": [
-            "SmartUpdateHash: $TexturePacker:SmartUpdate:013a2fc3dc6ba39276db3e6758d1ddbd:84789f29f2d01b3ea1c113a3b2d1bfdc:e696b1a5c9e543dbf26d7c8d29a6d04f$",
-            "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
-        ]
+        }
     };
     enemyAtlas = new createjs.SpriteSheet(atlasData);
     scene = config.Scene.MENU;

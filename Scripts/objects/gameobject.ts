@@ -39,10 +39,10 @@ module objects {
             this._position = p;
         }
 
-        constructor(atlas: createjs.SpriteSheet, imageString : string, deathAnimString) {
+        constructor(atlas: createjs.SpriteSheet, imageString : string, deathAnimString : string) {
             super(atlas, imageString);
 
-            this._deathAnim = deathAnimString;
+            //this._deathAnim = deathAnimString;
 
             this._initialize(imageString);
             this.start();
@@ -61,15 +61,11 @@ module objects {
         public update():void {
             this.x = this.position.x;
             this.y = this.position.y;
-
-            if(this.currentAnimationFrame == enemyAtlas.getNumFrames("explode") - 1) {
-                currentScene.removeChild(this);
-            }
         }
 
         public destroy() : void {
-            this.gotoAndPlay(this._deathAnim);
-            currentScene.removeChild(this);
+            //this.gotoAndPlay(this._deathAnim);
+            //currentScene.removeChild(this);
         }
     }
 }

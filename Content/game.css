@@ -14,4 +14,5 @@ canvas {
     background-color: white;
     margin-left: 10%;
     /*HINT: Hide the cursor here */
+    cursor: url(../Assets/images/crosshair.png) 35 35 ,crosshair;
 }
